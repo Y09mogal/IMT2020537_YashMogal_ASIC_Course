@@ -1,51 +1,49 @@
 # ASIC Course Specifications
 ## Week-0
 ### Day-0 : System Installation
-#### Yosys
+- Yosys
 To install Yosys, follow below steps:
-1.
 ```bash
 git clone https://github.com/YosysHQ/yosys.git
 ```
-2.
 ```bash
 cd yosys-master 
 ```
-3.
 ```bash
 sudo apt install make
 ```
-4.
 ```bash
 sudo apt-get install build-essential clang bison flex \
     libreadline-dev gawk tcl-dev libffi-dev git \
     graphviz xdot pkg-config python3 libboost-system-dev \
     libboost-python-dev libboost-filesystem-dev zlib1g-dev
 ```
-5.
 ```bash
 make config-gcc
 ```
-6.
 ```bash
 make
 ```
-7.
 ```bash
 sudo make install
 ```
-#### Iverilog
+![yosys_installation](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/6d6ac295-19b3-4b7b-af45-4e4e6e8a90f3)
+
+
+- Iverilog
 To insatll iVerilog :
 ```bash
 sudo apt-get install iverilog
 ```
-#### gtkwave
+![iverilog_installation](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/bdb0271c-1280-4da5-a5da-49e631be767c)
+
+
+- gtkwave
 To install gtkwave, follow these steps:
-1.
 ```bash
 sudo apt update
 ```
-2.
 ```bash
 sudo apt install gtkwave
 ```
+![gtkwave_installation](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/1051e8dd-0bf9-4821-a511-ac1e41eaa930)
