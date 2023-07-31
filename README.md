@@ -2,7 +2,7 @@
 ## Week-0
 ### Day-0 : System Installation
 #### Yosys
-To install Yosys, follow below steps:
+To install Yosys, follow the below steps:
 ```bash
 git clone https://github.com/YosysHQ/yosys.git
 ```
@@ -31,7 +31,7 @@ sudo make install
 
 
 #### Iverilog
-To insatll iVerilog :
+To install iVerilog :
 ```bash
 sudo apt-get install iverilog
 ```
