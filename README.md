@@ -746,7 +746,7 @@ Ideally, we expect gate-level netlists to perform similarly to RTL designs. Howe
 
 
 <details>
-<summary> Overview of Blocking and Non-blockin</summary>
+<summary> Overview of Blocking and Non-blocking</summary>
 
 Blocking assignments are executed in the order that they appear in the code. When a blocking assignment occurs, the expression on the right-hand side (RHS) is immediately evaluated, and the signal on the left-hand side (LHS) is updated with the new value. Non-blocking assignments, on the other hand, are not immediately executed. Instead, at the end of a procedural block's execution, all non-blocking assignments are assessed concurrently.
 
@@ -756,7 +756,10 @@ Blocking assignments are executed in the order that they appear in the code. Whe
 <summary> Simulation and synthesis: ternary_operator_mux </summary>
 
 <br />
+
 **Simulation:**
+
+<br />
 
 Follow the below command to simulate the ternary_operator_mux:
 
@@ -801,9 +804,13 @@ yosys> show
 The resultant waveform after the simulation of ternary_operator_mux is shown below:
 
 <br />
+
 ![Screenshot from 2023-08-15 23-22-05](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/7ff970db-0b60-416d-9d31-e7f425b4e6e2)
 
+
 <br />
+
+
 
 ![Screenshot from 2023-08-15 23-22-18](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/fa1f70dd-64d0-40ac-b3fa-92e174a8c9df)
 
@@ -841,8 +848,14 @@ Below is the simulation which matches with pre-synthesis simulation:
 <details> 
 <summary> Simulation and synthesis: bad_mux </summary>
 
+
+
 <br />
+
 **Simulation:**
+
+<br />
+
 
 Follow the below command to simulate the bad_mux:
 
@@ -856,10 +869,15 @@ gtkwave tb_bad_mux.vcd
 
 <br />
 
-The resultant waveform after the simulation of ternary_operator_mux is shown below:
+It is clear from the screenshot of the simulation results presented below that problematic behavior has been seen. The disparity develops specifically when the inputs are changed. In this context, it is clear that the variable "y" is not evaluated. This result contradicts the expected behavior and indicates an error in the simulation procedure.
 
 <br />
 
+The resultant waveform after the simulation of bad_mux is shown below:
+
+<br />
+
+![Screenshot from 2023-08-16 00-19-00](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/61ad80c2-519f-4a34-a990-b0337a434ee9)
 
 
 <br />
@@ -868,52 +886,163 @@ The resultant waveform after the simulation of ternary_operator_mux is shown bel
 
 <br />
 
-Follow the below-given commands to synthesize the ternary_operator_mux:
+Follow the below-given commands to synthesize the bad_mux:
 
 <br />
 
 ```bash
 yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-yosys> read_verilog ternary_operator_mux.v
-yosys> synth -top ternary_operator_mux
-yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-yosys> write_verilog -noattr ternary_operator_mux_net.v
+yosys> read_verilog  bad_mux.v
+yosys> synth -top bad_mux
+yosys> abc -liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> write_verilog -noattr bad_mux_net.v
 yosys> show
 ```
 
 <br />
 
-The resultant waveform after the simulation of ternary_operator_mux is shown below:
+The resultant waveform after the simulation of bad_mux is shown below:
+
+<br />
+
+![Screenshot from 2023-08-16 00-19-10](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/6d81ad60-93d2-4eda-b399-949b1f4bb6ed)
+
 
 <br />
 
 
+<br />
+
+![Screenshot from 2023-08-16 00-19-27](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/1a8836e6-ce66-43f4-9c10-13a3a275d1cf)
+
 
 <br />
+
 
 **GLS**
 
 <br />
 
-Follow the below-given commands for GLS of the ternary_operator_mux:
+Follow the below-given commands for GLS of the bad_mux:
 
 <br />
 
 ```bash
-iverilog <path to verilog model: ../mylib/verilog_model/primitives.v> <path to sky130_fd_sc_hd__tt_025C_1v80.lib: ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib> <name netlist: ternary_operator_mux_net.v> <name testbench: tb_ternary_operator_mux.v>
+iverilog <path to verilog model: ../mylib/verilog_model/primitives.v> <path to sky130_fd_sc_hd__tt_025C_1v80.lib: ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib> <name netlist: bad_mux_net.v> <name testbench: tb_bad_mux.v>
 ./a.out
-gtkwave tb_ternary_operator_mux.vcd
+gtkwave tb_bad_mux.vcd
 ```
 
 <br />
 
-Below is the simulation which matches with pre-synthesis simulation:
+Below is the representation of obtained simulation and as you can see it's not matching up with the simulation we did before which was pre-synthesis simulation
+
+
+
+
 
 <br />
 
 
+</details>
+
+
+<details> 
+
+<summary> Simulation and synthesis: blocking_caveat.v </summary>
 
 <br />
+
+**Simulation:**
+
+<br />
+
+
+Follow the below command to simulate the blocking_caveat:
+
+<br />
+
+```bash
+iverilog blocking_caveat.v tb_blocking_caveat.v
+./a.out
+gtkwave tb_blocking_caveat.vcd
+```
+
+<br />
+
+The result of the simulation we ran is depicted in the visual depiction below. Notably, careful examination reveals that the variable "d" is maintaining or holding on to its prior values. Surprisingly, this behavior is similar to that of a flip-flop in a circuit, despite the fact that the circuit arrangement in question does not include an actual flip-flop component. This inconsistency with the circuit's intended design and purpose constitutes improper behavior, showing a divergence from the expected simulation findings.
+
+<br />
+
+The resultant waveform after the simulation of blocking_caveat is shown below:
+
+<br />
+
+![Screenshot from 2023-08-16 00-27-17](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/f55799fd-d64e-4a77-aee3-85136f9b930d)
+
+
+<br />
+
+**Synthesis & Netlist**
+
+<br />
+
+Follow the below-given commands to synthesize the blocking_caveat:
+
+<br />
+
+```bash
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog  blocking_caveat.v
+yosys> synth -top blocking_caveat
+yosys> abc -liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> write_verilog -noattr blocking_caveat_net.v
+yosys> show
+```
+
+<br />
+
+The resultant waveform after the simulation of blocking_caveat is shown below:
+
+<br />
+
+![Screenshot from 2023-08-16 00-27-28](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/2a21f6d6-df48-4060-b694-4bc19965b5dc)
+
+
+
+<br />
+
+
+<br />
+
+![Screenshot from 2023-08-16 00-27-41](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/0146972a-cc61-487f-8dce-9bee9553250a)
+
+
+
+<br />
+
+
+**GLS**
+
+<br />
+
+Follow the below-given commands for GLS of the blocking_caveat:
+
+<br />
+
+```bash
+iverilog <path to verilog model: ../mylib/verilog_model/primitives.v> <path to sky130_fd_sc_hd__tt_025C_1v80.lib: ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib> <name netlist: blocking_caveat_net.v> <name testbench: tb_blocking_caveat.v>
+./a.out
+gtkwave tb_blocking_caveat.vcd
+```
+
+<br />
+
+Below representation shows an evident dissimilarity arises when comparing this simulation result with the simulation executed prior to the synthesis stage. The primary reason for this disparity can be attributed to the presence of a blocking statement within the design.
+
+
+<br />
+
 
 
 </details>
