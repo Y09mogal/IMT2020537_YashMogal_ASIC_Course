@@ -521,13 +521,66 @@ Schematic Diagram for the same:
 ### Day-3 
 <details>
 <summary> Intro to Optimizations </summary>
-
+The principles of optimization serve as the foundation for obtaining improved performance, efficiency, and functionality in the vast world of ASIC design. We can ensure that the combinational logic in your ASIC design is fine-tuned for optimal performance and efficiency by using techniques such as Boolean logic optimization, logic synthesis, and technology mapping.
 
 </details>
 
 
 <details>
 <summary> Combination logic optimizations </summary>
+    
+Combinational optimization is a key component in the ASIC design process, focused on logic circuits that generate output entirely dependent on their current input values. At this stage, optimization aims to refine the logic gates and their interconnections in order to achieve minimal propagation delays, low power consumption, and compact layouts. The commands for the same are listed below:
+
+<br />
+
+```bash
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog opt_check.v
+yosys> synth -top opt_check
+yosys> opt_clean -purge
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+
+<br />
+
+A schematic of the optimized design is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 21-43-03](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/02822a32-b282-4764-9079-168690e39a64)
+
+<br />
+
+A schematic of the optimized design of optcheck_2.v (y=a?1:b) is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 21-45-45](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/494f2d1a-337d-4cd3-a4a6-816032fd9aa5)
+
+<br />
+
+A schematic of the optimized design of optcheck_3.v (y=a?(c?b:0):0) is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 21-47-58](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/3d8824b9-3ef5-42fd-a850-bfd0f0078ace)
+
+<br />
+
+A schematic of the optimized design of optcheck_4.v (y = a?(b?(a & c ):c):(!c)) is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 21-49-30](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/663dea1c-a1aa-44ea-97f1-73fec0752e59)
+
+<br />
+
+A schematic of the optimized design of multiple_module_opt.v is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 21-53-15](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/d03bfe2a-7900-48a2-afa9-ed95556fb270)
 
 
 </details>
@@ -536,11 +589,147 @@ Schematic Diagram for the same:
 <details>
 <summary> Sequential logic optimizations </summary>
 
+<br />
 
-</details>
+On the other hand, sequential optimization explores the complexity brought on by memory components and feedback loops within a circuit. Sequential logic is created by these elements, in which the result is dependent not only on the inputs being used at the time but also on earlier states. A comprehensive strategy is required to achieve optimal performance in sequential logic, which includes elements such as clock frequency, setup and hold periods, and routing congestion.
+Commands for simulation of the design 'dff_const1.v' is shown below:
 
-<details>
-<summary> Sequential optimization for unused outputs </summary>
+<br />
+
+```bash
+iverilog dff_const1.v tb_dff_const1.v
+./a.out
+gtkwave tb_dff_const1.vcd
+```
+<br />
+
+**dff_const1**
+
+The waveform representation obtained after the simulation of dff_const1 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-14-23](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/e3f4a05e-3d22-4fd7-a71b-8cba45b30c27)
+
+
+<br />
+
+The schematic obtained after the synthesis of dff_const1 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-29-56](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/a2734827-52c2-4f15-adde-9fbd82b27730)
+
+
+<br />
+
+**dff_const2**
+
+The waveform representation obtained after the simulation of dff_const2 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-16-19](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/1ff256fd-590c-4b02-b9c5-fea770b20f9c)
+
+
+<br />
+
+The schematic obtained after the synthesis of dff_const2 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-32-25](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/e814ee9d-6e52-4022-88f6-93d8c678f3b5)
+
+
+<br />
+
+**dff_const3**
+
+The waveform representation obtained after the simulation of dff_const3 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-17-21](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/96b1f128-21b4-461d-b2d9-fe4a2cce4797)
+
+
+<br />
+
+The schematic obtained after the synthesis of dff_const3 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-33-31](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/b838b5c4-09e6-44ef-9a2b-cbfebf4bfd2a)
+
+
+<br />
+
+**dff_const4**
+
+The waveform representation obtained after the simulation of dff_const4 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-18-19](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/82c9fbed-e47b-42c9-97ce-569ea7cedd5d)
+
+
+<br />
+
+The schematic obtained after the synthesis of dff_const4 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-34-43](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/bd47808e-f4a8-4463-a823-0ccab994afca)
+
+
+<br />
+
+**dff_const5**
+
+The waveform representation obtained after the simulation of dff_const5 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-19-18](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/f111989b-d695-4951-bcf2-1d4be1d33520)
+
+
+<br />
+
+The schematic obtained after the synthesis of dff_const5 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-36-11](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/1e565fbd-aee5-4d42-b568-73552022676d)
+
+
+<br />
+
+**counter_opt**
+
+<br />
+
+The schematic obtained after the synthesis of counter_opt is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-42-07](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/ccd01f82-dfdf-4150-99e9-84fc85b91dc5)
+
+
+<br />
+
+
+**counter_opt2**
+
+<br />
+
+The schematic obtained after the synthesis of counter_opt2 is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 22-45-19](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/76452a4d-5fc1-493b-b967-45b9c1021236)
+
+
+<br />
+
 
 
 </details>
