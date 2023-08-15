@@ -921,30 +921,314 @@ Below is the simulation which matches with pre-synthesis simulation:
 
 ### Day-5 
 <details>
-<summary> Intro to If case constructs </summary>
+<summary> Overview </summary>
 
+To achieve optimal performance and functionality in the field of ASIC VLSI system design, effective decision-making and control flow techniques are critical. This is where conditional structures like "if" and "case" statements come into play. These statements are extremely useful for controlling the behaviour of digital circuits, allowing designers to build dynamic reactions based on specified conditions or input values. The complicated interplay between these conditional statements and the underlying hardware architecture is the foundation for creating sophisticated and responsive ASIC designs in this setting. 
 
 </details>
-
 
 <details>
 <summary> Incomplete If case labs </summary>
 
+<br />
+
+<details>
+<summary> Simulation and synthesis of incomp_if </summary>
+
+<br />
+
+A simulation and synthesis depiction is shown below, along with the results of the simulation process. Analysis reveals that an inferred latch has materialised inside the design. This conclusion is based on the observation that the output constantly maintains a constant value when the "select" signal fails to acquire a high state.
+
+<br />
+
+![Screenshot from 2023-08-15 23-46-03](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/631f25b1-0299-4217-98b9-6642b2df426f)
+
+
+<br />
+
+![Screenshot from 2023-08-15 23-46-22](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/66c96343-47ce-43b5-856f-6e61db6c76e0)
+
+
+<br />
+
+</details>
+
+
+<br />
+
+<details>
+<summary> Simulation and synthesis of incomp_if2 </summary>
+
+<br />
+
+The simulation and synthesised representation of incomp_if2 are presented here.
+
+<br />
+
+![Screenshot from 2023-08-15 23-48-02](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/35c07f96-2718-4b0f-9854-43000987610e)
+
+
+<br />
+
+![Screenshot from 2023-08-15 23-48-16](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/5fe1b869-6a6c-46c3-b059-eb8642cdb4be)
+
+
+<br />
+
+</details>
+
+<br />
 
 </details>
 
 
 <details>
-<summary> Incomplete Overlap case labs </summary>
+<summary> Simulation and synthesis of incomp_case and comp_case </summary>
 
+In essence, a "case" statement involves evaluating a given expression against a set of predefined conditions, known as case values. Once a match is found between the expression and a case value, the associated block of logic is executed. This allows for the implementation of various pathways based on different input scenarios.
+
+<br />
+
+```bash
+
+```
+
+<br />
+
+The representation of simulation and synthesis is illustrated below. This behaviour is most noticeable when the "select" signal is assigned a value of 2 or 3, with special focus on the condition where the second bit of the "select" signal, indicated as sel[1,] asserts a logic level of 1.
+
+<br />
+
+![Screenshot from 2023-08-15 23-49-59](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/854ede61-f9b2-443b-8e05-e076b975055c)
+
+
+<br />
+
+<br />
+
+![Screenshot from 2023-08-15 23-50-13](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/e48b8c22-1232-46d5-90ce-271eb9eea441)
+
+
+<br />
+
+Below is the representation of incomp_case
+
+<br />
+
+![Screenshot from 2023-08-15 23-50-26](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/f1044be2-695a-47b3-b1a1-534c057fe275)
+
+
+<br />
+
+![Screenshot from 2023-08-15 23-50-43](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/ab494141-86fd-4cce-bd90-e2114fa38566)
+
+
+<br />
 
 </details>
 
 <details>
-<summary> For generate and For loop </summary>
+<summary> Synthesis of partial_case_assign </summary>
 
+A representation of the design achieved is shown here, and within it, a clear consequence corresponds with our objectives. As expected, a single latch appears, controlling the behaviour of the x output. Furthermore, the design itself deduces the boolean expressions we predicted for x and y. This means that the design accurately recognises and implements the logic we intended for x and y, the way they should work based on specified conditions.
+
+<br />
+
+![Screenshot from 2023-08-15 23-53-19](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/4b6bfa4b-8a7d-495e-87a8-c925b62399c7)
+
+
+<br />
 
 </details>
+
+
+<details>
+<summary> Simulation, synthesis, and GLS of bad_case </summary>
+
+The representation of bad_case is shown below. When the "select" input is set to the binary value "11," the simulation encounters a perplexing predicament. In this case, the simulator appears to struggle with choosing the best course of action, resulting in the y output assuming a constant value of "1."
+
+<br />
+
+![Screenshot from 2023-08-15 23-54-29](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/fc548e5a-4436-43d2-8025-0ba9b92609b7)
+
+
+<br />
+
+<br />
+
+![Screenshot from 2023-08-15 23-54-43](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/2c9f3173-f2ea-4ebb-b947-afc2bc70caef)
+
+<br />
+
+Below are the commands for GLS:
+
+<br />
+
+```bash
+iverilog  ../mylib/verilog_model/primitives.v ../mylib/verilog_model/sky130_fd_sc_hd.v bad_case_net.v tb_bad_case.v
+./a.out
+gtkwave tb_bad_case.vcd
+```
+
+<br />
+
+The simulation that follows shows the mismatch.
+
+<br />
+
+![Screenshot from 2023-08-15 23-56-49](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/d8306a49-d429-41d8-89be-2b37380a4e8d)
+
+<br />
+
+</details>
+
+<details>
+<summary> Simulation, synthesis, and GLS of mux_generate </summary>
+
+Below is the representation simulation of mux_generate which is 4*1 mux
+
+<br />
+
+![Screenshot from 2023-08-15 23-59-29](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/f8d9fa58-1d79-4207-b995-14d5fef2c492)
+
+<br />
+
+<br />
+
+![Screenshot from 2023-08-15 23-59-42](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/8d3bd420-8984-4078-8703-9e6159a980c2)
+
+<br />
+
+To obtain GLS below are the commands:
+
+<br />
+
+```bash
+iverilog  ../mylib/verilog_model/primitives.v ../mylib/verilog_model/sky130_fd_sc_hd.v mux_generate_net.v tb_mux_generate.v
+./a.out
+gtkwave tb_mux_generate.vcd
+```
+
+<br />
+
+Below is the resulted simulation which completely matches with previous one:
+
+
+<br />
+
+![Screenshot from 2023-08-15 23-59-29](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/93c959b2-4e3f-4bec-bb3b-ab6210eb32b0)
+
+<br />
+
+</details>
+
+
+<details>
+<summary> demux_case </summary>
+
+Below is the representation of demux_case, and by observing it, it is 1*8 demux:
+
+<br />
+
+![Screenshot from 2023-08-16 00-01-16](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/0c76ca27-e20b-4d59-be5f-f1ea657ce170)
+
+<br />
+
+</details>
+
+
+<details>
+<summary> demux_generate </summary>
+
+Below is the representation of demux_generate and by observing it is 1*8 demux
+
+<br />
+
+![Screenshot from 2023-08-16 00-04-05](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/3c108e46-7f6e-4e40-960f-af98c5a42b96)
+
+
+<br />
+
+Below is the synthesized design representation
+
+<br />
+
+![Screenshot from 2023-08-16 00-04-15](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/d833b3c2-8647-4dbd-a4e8-d480cd69215e)
+
+
+<br />
+
+To obtain GLS below are the commands:
+
+<br />
+
+```bash
+iverilog  ../mylib/verilog_model/primitives.v ../mylib/verilog_model/sky130_fd_sc_hd.v mux_generate_net.v tb_mux_generate.v
+./a.out
+gtkwave tb_mux_generate.vcd
+```
+
+<br />
+
+Below is shown the simulation which perfectly matches the previous one
+
+
+<br />
+
+![Screenshot from 2023-08-16 00-04-33](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/9b119830-c6aa-46ef-b7c8-83855a503b66)
+
+<br />
+
+</details>
+
+<details>
+<summary> RCA </summary>
+
+Below is the representation of rca and by observing it is 8bit rca
+
+<br />
+
+![Screenshot from 2023-08-16 00-07-25](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/d3921a77-abb3-47b5-81b0-3b078f81ac70)
+
+
+<br />
+
+Below is the synthesized version of 8bit rca
+
+
+
+<br />
+
+![Screenshot from 2023-08-16 00-07-36](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/59d64c51-eaf8-411e-be52-372a5cb01b5e)
+
+
+
+<br />
+
+To obtain GLS below are the commands:
+
+<br />
+
+```bash
+iverilog  ../mylib/verilog_model/primitives.v ../mylib/verilog_model/sky130_fd_sc_hd.v mux_generate_net.v tb_mux_generate.v
+./a.out
+gtkwave tb_mux_generate.vcd
+```
+
+<br />
+
+Below is shown the simulation which perfectly matches the previous one
+
+
+<br />
+
+![Screenshot from 2023-08-16 00-07-46](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/582bd689-b7e4-426d-b309-18155f391e23)
+
+
+<br />
+
+</details>
+
 
 
 
