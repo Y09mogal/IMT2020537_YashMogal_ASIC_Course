@@ -736,14 +736,184 @@ The schematic obtained after the synthesis of counter_opt2 is shown below:
 
 ### Day-4 
 <details>
-<summary> Gate Level Simulations and Synthesis level mismatch </summary>
+<summary> Overview of Gate Level Simulations and Synthesis level mismatch </summary>
 
+Gate-level simulation is critical in digital hardware design and verification, particularly in VLSI, FPGA, and ASIC design. It includes simulating a digital circuit's behavior at the gate level, which is the lowest level of abstraction in the design hierarchy. Before fabrication or hardware implementation, gate-level simulation can help evaluate the validity of a circuit's logic and functionality. 
+Yosys generates verilog code to map gate-level netlists to conventional cell libraries later. This code is functionally comparable to the RTL design code that we wrote. The netlist is simulated to check that functionality is retained after synthesis. The netlist is constructed using gate models that are either timing or functionally aware, or both. Timing awareness relates to knowledge of gate delays.
+Ideally, we expect gate-level netlists to perform similarly to RTL designs. However, it may fail to perform as planned due to a variety of factors such as missing signals in the sensitivity list, incorrect usage of blocking and non-blocking statements, and poor RTL design.
 
 </details>
 
 
 <details>
-<summary> Blocking and Non-blocking Labs </summary>
+<summary> Overview of Blocking and Non-blockin</summary>
+
+Blocking assignments are executed in the order that they appear in the code. When a blocking assignment occurs, the expression on the right-hand side (RHS) is immediately evaluated, and the signal on the left-hand side (LHS) is updated with the new value. Non-blocking assignments, on the other hand, are not immediately executed. Instead, at the end of a procedural block's execution, all non-blocking assignments are assessed concurrently.
+
+</details>
+
+<details> 
+<summary> Simulation and synthesis: ternary_operator_mux </summary>
+
+<br />
+**Simulation:**
+
+Follow the below command to simulate the ternary_operator_mux:
+
+<br />
+
+```bash
+iverilog <name verilog: ternary_operator_mux.v tb_ternary_operator_mux.v
+./a.out
+gtkwave tb_ternary_operator_mux.vcd
+```
+
+<br />
+
+The resultant waveform after the simulation of ternary_operator_mux is shown below:
+
+<br />
+
+![Screenshot from 2023-08-15 23-21-21](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/ab1c465a-e4bb-410e-8163-9d4453369ba2)
+
+
+<br />
+
+**Synthesis & Netlist**
+
+<br />
+
+Follow the below-given commands to synthesize the ternary_operator_mux:
+
+<br />
+
+```bash
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog ternary_operator_mux.v
+yosys> synth -top ternary_operator_mux
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> write_verilog -noattr ternary_operator_mux_net.v
+yosys> show
+```
+
+<br />
+
+The resultant waveform after the simulation of ternary_operator_mux is shown below:
+
+<br />
+![Screenshot from 2023-08-15 23-22-05](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/7ff970db-0b60-416d-9d31-e7f425b4e6e2)
+
+<br />
+
+![Screenshot from 2023-08-15 23-22-18](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/fa1f70dd-64d0-40ac-b3fa-92e174a8c9df)
+
+
+<br />
+
+**GLS**
+
+<br />
+
+Follow the below-given commands for GLS of the ternary_operator_mux:
+
+<br />
+
+```bash
+iverilog <path to verilog model: ../mylib/verilog_model/primitives.v> <path to sky130_fd_sc_hd__tt_025C_1v80.lib: ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib> <name netlist: ternary_operator_mux_net.v> <name testbench: tb_ternary_operator_mux.v>
+./a.out
+gtkwave tb_ternary_operator_mux.vcd
+```
+
+<br />
+
+Below is the simulation which matches with pre-synthesis simulation:
+
+<br />
+
+![Screenshot from 2023-08-15 23-22-51](https://github.com/Y09mogal/IMT2020537_YashMogal_ASIC_Course/assets/79003694/8b303f91-f5c5-419a-b02b-87bab1e96b83)
+
+
+<br />
+
+
+</details>
+
+<details> 
+<summary> Simulation and synthesis: bad_mux </summary>
+
+<br />
+**Simulation:**
+
+Follow the below command to simulate the bad_mux:
+
+<br />
+
+```bash
+iverilog <name verilog: bad_mux.v tb_bad_mux.v
+./a.out
+gtkwave tb_bad_mux.vcd
+```
+
+<br />
+
+The resultant waveform after the simulation of ternary_operator_mux is shown below:
+
+<br />
+
+
+
+<br />
+
+**Synthesis & Netlist**
+
+<br />
+
+Follow the below-given commands to synthesize the ternary_operator_mux:
+
+<br />
+
+```bash
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog ternary_operator_mux.v
+yosys> synth -top ternary_operator_mux
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> write_verilog -noattr ternary_operator_mux_net.v
+yosys> show
+```
+
+<br />
+
+The resultant waveform after the simulation of ternary_operator_mux is shown below:
+
+<br />
+
+
+
+<br />
+
+**GLS**
+
+<br />
+
+Follow the below-given commands for GLS of the ternary_operator_mux:
+
+<br />
+
+```bash
+iverilog <path to verilog model: ../mylib/verilog_model/primitives.v> <path to sky130_fd_sc_hd__tt_025C_1v80.lib: ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib> <name netlist: ternary_operator_mux_net.v> <name testbench: tb_ternary_operator_mux.v>
+./a.out
+gtkwave tb_ternary_operator_mux.vcd
+```
+
+<br />
+
+Below is the simulation which matches with pre-synthesis simulation:
+
+<br />
+
+
+
+<br />
 
 
 </details>
